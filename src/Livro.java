@@ -1,4 +1,5 @@
 public class Livro {
+    Biblioteca biblioteca = new Biblioteca();
 
     private final String titulo;
     private final String autor;
@@ -14,7 +15,6 @@ public class Livro {
         this.autor = autor;
         this.isbn = isbn;
         this.situacao = Situacao.DISPONIVEL;
-
     }
 
     public String getAutor() {
@@ -33,7 +33,10 @@ public class Livro {
         return situacao;
     }
 
-    public void setSituacao(Situacao situacao) {
+    public void setSituacao(Situacao situacao) throws LivroIndisponivelException {
+        if (this.situacao == situacao){
+            throw new LivroIndisponivelException("Livro já emprestado: " + titulo);
+        }
         this.situacao = situacao;
     }
 }

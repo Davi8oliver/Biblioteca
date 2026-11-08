@@ -1,4 +1,4 @@
-public class LimiteExcedidoException extends RuntimeException {
+public class LimiteExcedidoException extends Exception {
     public LimiteExcedidoException(String message) {
         super(message);
     }

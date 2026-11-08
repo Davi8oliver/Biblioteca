@@ -1,4 +1,4 @@
-public class LivroDuplicadoException extends RuntimeException {
+public class LivroDuplicadoException extends Exception {
     public LivroDuplicadoException(String message) {
         super(message);
     }

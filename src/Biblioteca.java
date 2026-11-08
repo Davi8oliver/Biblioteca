@@ -4,11 +4,16 @@ import java.util.List;
 
 public class Biblioteca {
 
-    Membro membro;
-    Livro livro;
-
     private final List<Livro> acervo = new ArrayList<>();
     private final List<Membro> membros = new ArrayList<>();
+
+    public List<Membro> getMembros() {
+        return membros;
+    }
+
+    public List<Livro> getAcervo() {
+        return acervo;
+    }
 
     public List<Livro> listarDisponiveis(){
         return acervo.stream()
@@ -18,32 +23,25 @@ public class Biblioteca {
     }
 
     public void adicionarLivro(Livro livro) throws LivroDuplicadoException {
-
-        boolean existe = acervo.stream().anyMatch(l -> l.getIsbn().equals(livro.getIsbn()));
-
-        if (existe){
+        if (acervo.contains(livro)){
             throw new LivroDuplicadoException("Livro já cadastrado: " + livro.getTitulo());
         }acervo.add(livro);
     }
 
-    public void devolver() throws LivroSemPosseException{
-
-        boolean possui = membro.getPosse().stream().anyMatch(l -> l.getIsbn().equals(livro.getIsbn()));
-
-        if (possui){
-            throw new LivroSemPosseException("Membro não possui o livro: " + livro.getTitulo());
-        }
-        membro.removeLivrosEmprestados(livro);
+    public void adicionarMembro(Membro membro) throws MembroExistenteException {
+        if (membros.contains(membro)){
+            throw new MembroExistenteException("Membro já cadastrado: " + membro.getNome());
+        }membros.add(membro);
     }
 
-    public void emprestar() throws LivroIndisponivelException, LimiteExcedidoException {
-        if (livro.getSituacao() == Livro.Situacao.EMPRESTADO) {
-            throw new LivroIndisponivelException("Livro já emprestado: " + livro.getTitulo());
-        } else if (membro.quantidade() > 3) {
-            throw new LimiteExcedidoException("Membro ja atingiu o limite de livros: " + membro.getPosse());
-        }
-        livro.setSituacao(Livro.Situacao.EMPRESTADO);
+    public void devolver(Membro membro, Livro livro) throws LivroSemPosseException, LivroIndisponivelException {
+        membro.removeLivrosEmprestados(livro);
+        livro.setSituacao(Livro.Situacao.DISPONIVEL);
+    }
+
+    public void emprestar(Membro membro, Livro livro) throws LivroIndisponivelException, LimiteExcedidoException, LivroDuplicadoException {
         membro.setLivrosEmprestados(livro);
+        livro.setSituacao(Livro.Situacao.EMPRESTADO);
     }
 
 }
