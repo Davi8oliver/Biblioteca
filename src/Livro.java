@@ -39,4 +39,15 @@ public class Livro {
         }
         this.situacao = situacao;
     }
+
+    public boolean verificarExistencia(String titulo) throws LivroIndisponivelException {
+
+        if (!biblioteca.getAcervo().stream().anyMatch(l -> l.titulo.equals(this.titulo))){
+            throw new LivroIndisponivelException("Livro não está disponível: " + this.titulo);
+        }
+
+        return true;
+
+    }
+
 }

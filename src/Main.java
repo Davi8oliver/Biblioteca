@@ -11,16 +11,16 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) throws LivroDuplicadoException, MembroExistenteException {
+    public static void main(String[] args) throws MembroInexistenteException, LivroDuplicadoException, MembroExistenteException, LivroIndisponivelException, LimiteExcedidoException {
 
         Scanner scanner = new Scanner(System.in);
         Biblioteca biblioteca = new Biblioteca();
-        int opc;
-        String titulo;
-        String autor;
-        String isbn;
-        String nome;
-        int cpf;
+        int opc = 0;
+        String titulo = "";
+        String autor = "";
+        String isbn = "";
+        String nome = "";
+        int cpf = 0;
 
         do {
 
@@ -61,12 +61,7 @@ public class Main {
                     biblioteca.adicionarLivro(new Livro(titulo, autor, isbn));
                 }
                 case 5 -> {
-                    System.out.println("Digite o nome do Membro: ");
-                    nome = scanner.next();
-                    System.out.println("Digite o cpf do Membro: ");
-                    cpf = scanner.nextInt();
 
-                    if (biblioteca.getMembros().contains(cpf));
                 }
                 case 6 -> {
 
